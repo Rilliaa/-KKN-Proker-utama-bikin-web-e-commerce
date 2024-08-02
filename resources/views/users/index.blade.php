@@ -27,12 +27,19 @@
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
                                 <td>
-                                    <a href="{{route('users.edit', $user)}}" class="btn btn-primary btn-xs">
+                                    <a href="{{route('users.edit', $user->id)}}" class="btn btn-primary btn-xs">
                                         Edit
                                     </a>
-                                    <a href="{{route('users.destroy', $user)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs">
-                                        Delete
-                                    </a>
+                                    <form action="{{ route('user.destroy', $user->id)}}" method="POST" style="display:inline;" >
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger"  type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')" >
+                                            <i class="fas fa-trash"></i>
+                                            Delete
+                                        </button>
+                                        {{-- <a href="{{route('users.destroy', $user->id)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs"> --}}
+                                        {{-- </a> --}}
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

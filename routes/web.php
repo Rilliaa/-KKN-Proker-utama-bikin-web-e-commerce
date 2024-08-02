@@ -46,8 +46,13 @@ Route::get('/admin-kategori-dropdown',[KategoriController::class,'dropdown'])->n
 
 // -----------------------------Rute untuk Tambahan-----------------------------//
 Route::get('/admin-produk-tambahan/{id}',[TambahanController::class,'index'])->name('admin.tambahan-index');
+Route::post('/admin-produk-tambahan-store',[TambahanController::class,'store'])->name('admin.tambahan-store');
 // -----------------------------Rute untuk Tambahan-----------------------------//
 
+
+// -----------------------------Rute untuk User-----------------------------//
+Route::delete('/users/delete/{id}',[UserController::class,'destroy'])->name('user.destroy');
+// -----------------------------Rute untuk User-----------------------------//
 
 
 // -----------------------------Untuk Resource-----------------------------//
