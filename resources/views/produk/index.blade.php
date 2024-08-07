@@ -112,7 +112,7 @@
                     </div>
                     <div class="form-group">
                         <label for="harga">Foto Produk:</label>
-                        <input type="file" class="form-control" id="foto" name="foto" required>
+                        <input type="file" class="form-control" id="foto" name="foto" required  accept="image/*">
                     </div>
                     <button type="submit" class="btn btn-primary">Tambah</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -159,7 +159,7 @@
                     </div>
                     <div class="form-group">
                         <label for="harga">Foto Produk:</label>
-                        <input type="file" class="form-control" id="edit_foto" name="foto">
+                        <input type="file" class="form-control" id="edit_foto" name="foto"  accept="image/*">
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

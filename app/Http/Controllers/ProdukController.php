@@ -103,8 +103,13 @@ public function update(Request $request, $id_produk)
     {
         // Ini belum rio perbarui method nya, jadi foto yang udah ada pada database sudah terhapus tapi file foto nya masih ada di directory foto_produk
         // Mungkin nanti bisa di perbarui method delete nya, jadi saat hapus data, foto yang di directory juga terhapus. Ntar di copas aja  yang ada di method update di atas
-        Produk::destroy($id_produk);
+        $produk = Produk::findorfail($id_produk);
+        if ($produk->foto_utama && Storage::exists('public/' . $produk->foto_utama)) {
+                    Storage::delete('public/' . $produk->foto_utama);
+                }
+       $produk->delete(); 
         return back()->with(['success' => 'Produk berhasil dihapus.']);
     }
+
     
 }

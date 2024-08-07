@@ -153,11 +153,21 @@
                             </td>
                     
                             {{-- Kolom Aksi --}}
-                            <td class="text-center">
+                            @if ($index === 0)
+                            <td class="text-center " rowspan="{{ max($produk->tambahan->count(), 1) }}" style="padding: 70px 0;">
                                 <a href="{{ route('admin.tambahan-index',$produk->id_produk)}}" class="btn btn-info">
                                     <i class="fas fa-eye "></i> Detail Keterangan
-                                </a>
+                                </a> <br>
+                                <form action="{{ route('admin.tambahan-delete-all', $produk->id_produk) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button id="deleteAllButton" class="btn btn-danger mt-2" onclick="return confirm('Anda yakin ingin menghapus semua keterangan tambahan? Ini akan menghapus semua deskripsi dan foto tambahan.')">
+                                        <i class="fas fa-trash"></i> Delete Data
+                                    </button>
+                                </form>
                             </td>
+                            @endif
+                    
                         </tr>
                         @endforeach
                     
@@ -193,7 +203,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="foto_tambahan" class="form-label">Foto tambahan (Maks.4)</label>
-                        <input type="file" name="foto_tambahan" class="form-control" id="foto_tambahan">
+                        <input type="file" name="foto_tambahan" class="form-control" id="foto_tambahan"  accept="image/*">
                         <input type="hidden" id="id_produk" value="{{ $produk->id_produk }}">
                     </div>
                     <div class="mb-3">
