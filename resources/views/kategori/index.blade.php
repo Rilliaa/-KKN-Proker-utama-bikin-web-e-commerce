@@ -16,7 +16,7 @@
     </div>
 @endif
 
-{{-- Halaman ini di atur oleh method Kategori / index --}}
+{{-- Halaman ini di atur oleh method KategoriController / index --}}
 <div class="row">
     <div class="col-12">
         <div class="card">

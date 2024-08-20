@@ -35,87 +35,88 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                {{-- cek deskripsi tambahan --}}
-                @if($produk->tambahan->whereNotNull('deskripsi_tambahan')->isNotEmpty())
-                <h2>Deskripsi Tambahan:</h2>
-                    @foreach($produk->tambahan as $tambahan)
-                        @if($tambahan->deskripsi_tambahan)
-                            <div class="mb-4">
-                                <label for="deskripsi_editor_{{ $tambahan->id_tambahan }}" class="form-label"></label>
-                                <!-- Textarea untuk CKEditor -->
-                                <textarea id="deskripsi_editor_{{ $tambahan->id_tambahan }}" class="form-control">{{ $tambahan->deskripsi_tambahan }}</textarea>
-                            </div>
-                            @break <!-- Cut satu deskripsi tambahan -->
-                        @endif
-                    @endforeach
-                @endif
 
-                          {{-- cek kategori tambahan --}}
-                          @if($produk->tambahan->whereNotNull('kategori')->isNotEmpty())
-                          <h2>Kategori Tambahan:</h2>
-                              @foreach($produk->tambahan as $tambahan)
-                                  @if($tambahan->kategori)
-                                  <form action="" method="POST" class="mb-4">
-                                      @csrf
-                                      @method('PATCH')
-                                      <div class="mb-3">
-                                          <label for="kategori_{{ $tambahan->id_tambahan }}" class="form-label">Kategori</label>
-                                          <select name="kategori" class="form-control select2" id="kategori_{{ $tambahan->id_tambahan }}" data-id="{{ $tambahan->id_tambahan }}">
-                                              @foreach($kategori as $kat)
-                                                  <option value="{{ $kat->id_kategori }}" {{ $kat->id_kategori == $tambahan->kategori->id_kategori ? 'selected' : '' }}>
-                                                      {{ $kat->nama_kategori }}
-                                                  </option>
-                                              @endforeach
-                                          </select>
+                  {{-- cek foto tambahan --}}
+                  @if($produk->tambahan->whereNotNull('foto_tambahan')->isNotEmpty())
+                  <h2>Foto Tambahan:</h2>
+                  <div class="row">
+                      @foreach($produk->tambahan as $tambahan)
+                          @if($tambahan->foto_tambahan)
+                              <div class="col-md-3 mb-4">
+                                  <div class="image-container">
+                                      <img id="preview_foto_{{ $tambahan->id_tambahan }}" src="{{ asset('storage/'.$tambahan->foto_tambahan) }}" alt="Foto Tambahan" class="img-fluid img-thumbnail" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal_{{ $tambahan->id_tambahan }}">
+                                  </div>
+                              </div>
+
+                             {{-- Modal untuk menampilkan gambar --}}
+                              <div class="modal fade" id="imageModal_{{ $tambahan->id_tambahan }}" tabindex="-1" aria-labelledby="imageModalLabel_{{ $tambahan->id_tambahan }}" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title" id="imageModalLabel_{{ $tambahan->id_tambahan }}">Foto Tambahan</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                              <img id="modal_foto_{{ $tambahan->id_tambahan }}" src="{{ asset('storage/'.$tambahan->foto_tambahan) }}" alt="Foto Tambahan" class="img-fluid">
+                                              
+                                              <div class="mb-3 mt-3">
+                                                  <label for="foto_tambahan_{{ $tambahan->id_tambahan }}" class="form-label">Update Foto Tambahan</label>
+                                                  <input type="file" accept="image/*" name="foto_tambahan" class="form-control" id="foto_tambahan_{{ $tambahan->id_tambahan }}" data-id="{{ $tambahan->id_tambahan }}">
+                                              </div>
+                                              
+                                              <form action="{{ route('admin.tambahan-destroy', $tambahan->id_tambahan) }}" method="POST" style="margin-top: 10px;">
+                                                  @csrf
+                                                  @method('DELETE')
+                                                  <button type="submit" class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus gambar ini? Deskripsi tidak akan dihapus.')">
+                                                  <i class="fas fa-trash"></i>    Hapus Gambar
+                                                  </button>
+                                              </form>
+                                          </div>
                                       </div>
-                                  </form>
-                                  @endif
-                              @endforeach
+                                  </div>
+                              </div>
                           @endif
+                      @endforeach
+                  </div>
+              @endif
+                {{-- cek kategori tambahan --}}
+              @if($produk->tambahan->whereNotNull('kategori')->isNotEmpty())
+              <h2>Kategori Tambahan:</h2>
+                  @foreach($produk->tambahan as $tambahan)
+                      @if($tambahan->kategori)
+                      <form action="" method="POST" class="mb-4">
+                          @csrf
+                          @method('PATCH')
+                          <div class="mb-3">
+                              <label for="kategori_{{ $tambahan->id_tambahan }}" class="form-label">Kategori</label>
+                              <select name="kategori" class="form-control select2" id="kategori_{{ $tambahan->id_tambahan }}" data-id="{{ $tambahan->id_tambahan }}">
+                                  @foreach($kategori as $kat)
+                                      <option value="{{ $kat->id_kategori }}" {{ $kat->id_kategori == $tambahan->kategori->id_kategori ? 'selected' : '' }}>
+                                          {{ $kat->nama_kategori }}
+                                      </option>
+                                  @endforeach
+                              </select>
+                          </div>
+                      </form>
+                      @endif
+                  @endforeach
+              @endif
 
-                {{-- cek foto tambahan --}}
-                @if($produk->tambahan->whereNotNull('foto_tambahan')->isNotEmpty())
-                    <h2>Foto Tambahan:</h2>
-                    <div class="row">
-                        @foreach($produk->tambahan as $tambahan)
-                            @if($tambahan->foto_tambahan)
-                                <div class="col-md-3 mb-4">
-                                    <div class="image-container">
-                                        <img id="preview_foto_{{ $tambahan->id_tambahan }}" src="{{ asset('storage/'.$tambahan->foto_tambahan) }}" alt="Foto Tambahan" class="img-fluid img-thumbnail" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#imageModal_{{ $tambahan->id_tambahan }}">
-                                    </div>
-                                </div>
-
-                               {{-- Modal untuk menampilkan gambar --}}
-                                <div class="modal fade" id="imageModal_{{ $tambahan->id_tambahan }}" tabindex="-1" aria-labelledby="imageModalLabel_{{ $tambahan->id_tambahan }}" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="imageModalLabel_{{ $tambahan->id_tambahan }}">Foto Tambahan</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <img id="modal_foto_{{ $tambahan->id_tambahan }}" src="{{ asset('storage/'.$tambahan->foto_tambahan) }}" alt="Foto Tambahan" class="img-fluid">
-                                                
-                                                <div class="mb-3 mt-3">
-                                                    <label for="foto_tambahan_{{ $tambahan->id_tambahan }}" class="form-label">Update Foto Tambahan</label>
-                                                    <input type="file" accept="image/*" name="foto_tambahan" class="form-control" id="foto_tambahan_{{ $tambahan->id_tambahan }}" data-id="{{ $tambahan->id_tambahan }}">
-                                                </div>
-                                                
-                                                <form action="{{ route('admin.tambahan-destroy', $tambahan->id_tambahan) }}" method="POST" style="margin-top: 10px;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus gambar ini? Deskripsi tidak akan dihapus.')">
-                                                    <i class="fas fa-trash"></i>    Hapus Gambar
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                @endif
+                {{-- cek deskripsi tambahan --}}
+              @if($produk->tambahan->whereNotNull('deskripsi_tambahan')->isNotEmpty())
+              <h2>Deskripsi Tambahan:</h2>
+                  @foreach($produk->tambahan as $tambahan)
+                      @if($tambahan->deskripsi_tambahan)
+                          <div class="mb-4">
+                              <label for="deskripsi_editor_{{ $tambahan->id_tambahan }}" class="form-label"></label>
+                              <!-- Textarea untuk CKEditor -->
+                              <textarea id="deskripsi_editor_{{ $tambahan->id_tambahan }}" class="form-control">{{ $tambahan->deskripsi_tambahan }}</textarea>
+                          </div>
+                          @break <!-- Cut satu deskripsi tambahan -->
+                      @endif
+                  @endforeach
+              @endif
+           
                 <div class="mb-3;">
                     <button id="updateDataButton" class="btn btn-success" disabled>
                         <i class="fas fa-edit"></i>  Update Data
