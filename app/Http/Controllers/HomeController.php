@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use App\Models\User;
 
@@ -26,7 +27,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $tglskrng = Carbon::today()->format('d-m-y');
+        $jumlahProduk = DB::table('produk')->count();
+        $jumlahKategori = DB::table('kategori')->count();
+        $keterangan_tambahan = Db::table('produk_tambahan')->count();
+        $foto_tambahan = Db::table('produk_tambahan')->count('foto_tambahan');
+        $deskripsi_tambahan = Db::table('produk_tambahan')->count('deskripsi_tambahan');
+     return view('home', compact(
+        'tglskrng',
+        'jumlahProduk', 
+        'jumlahKategori',
+        'foto_tambahan',
+        'deskripsi_tambahan',
+        'keterangan_tambahan'
+    ));
     }
    
 }

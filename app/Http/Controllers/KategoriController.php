@@ -10,7 +10,7 @@ class KategoriController extends Controller
     public function index()
     {
         // untuk mengatur tampilan pada kategori/index.blade.php
-        $kategori = Kategori::all();
+        $kategori = Kategori::orderby('nama_kategori')->paginate(10);
         return view('kategori.index', compact('kategori'));
     }
     public function store(Request $request)
@@ -45,7 +45,14 @@ class KategoriController extends Controller
     public function destroy($id_kategori)
     {
         // hapus data kategori kategori/index.blade.php
-        Kategori::destroy($id_kategori);
+
+        $kategori = Kategori::findOrFail($id_kategori);
+        if ($kategori->produk->count() > 0) {
+            return redirect()->back()->with('error', 'Kategori tidak bisa dihapus karena memiliki Produk yang bersangkutan. Harap hapus Produk terlebih dahulu.');
+        }
+
+        $kategori->delete();
+        // Kategori::destroy($id_kategori);
     
         return back()->with(['success' => 'Kategori berhasil dihapus.']);
     }

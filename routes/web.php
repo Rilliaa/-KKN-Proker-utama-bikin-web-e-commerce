@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\TambahanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PengaturanAkunController;
 
 
 // Default route
@@ -60,11 +61,22 @@ Route::delete('/users/delete/{id}',[UserController::class,'destroy'])->name('use
 // -----------------------------Rute untuk User-----------------------------//
 
 
+// -----------------------------Rute untuk Pengaturan Akun-----------------------------//
+Route::get('/pengaturan-akun', [PengaturanAkunController::class,'index'])->name('pengaturanAkun.index');
+Route::post('/pengaturan-akun/update-password', [PengaturanAkunController::class, 'updatePassword'])->name('password.update');
+// -----------------------------Rute untuk Pengaturan Akun-----------------------------//
+
+
+
+
 // -----------------------------Untuk Resource-----------------------------//
 Route::resource('users', \App\Http\Controllers\UserController::class)->middleware('auth');
 Route::resource('kategori', \App\Http\Controllers\KategoriController::class)->middleware('auth');
 Route::resource('tambahan', \App\Http\Controllers\TambahanController::class)->middleware('auth');
+Route::resource('pengaturan-akun', \App\Http\Controllers\PengaturanAkunController::class)->middleware('auth');
 // -----------------------------Untuk Resource-----------------------------//
+
+
 
 
 

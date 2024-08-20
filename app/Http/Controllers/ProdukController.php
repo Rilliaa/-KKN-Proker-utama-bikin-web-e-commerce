@@ -75,11 +75,11 @@ public function update(Request $request, $id_produk)
         if ($product->foto_utama) {
             Storage::delete('public/' . $product->foto_utama);
         }
-
+        
         // Simpan foto yg baru
-        $path = $request->file('foto')->store('public/foto_produk');
+        $path = $request->file('foto')->store('foto_produk', 'public');
         $product->foto_utama = str_replace('public/', '', $path); 
-
+        
     } else {
         // Jika tidak ada foto baru yang diunggah, gunakan foto yang sudah ada
         $product->foto_utama = $request->input('existing_foto');
@@ -95,8 +95,11 @@ public function update(Request $request, $id_produk)
     public function show ($id_produk)
     {
         // untuk mengatur tampilan produk/detai.blade.php
-        $produk = Produk::findOrFail($id_produk);
-        return view('produk.detail', compact('produk'));
+        // $produk = Produk::findOrFail($id_produk);
+        $produk = Produk::with('tambahan')->find($id_produk);
+        $fotoTambahanCount = $produk->tambahan->whereNotNull('foto_tambahan')->count();
+        $max_foto_tambahan = 4;
+        return view('produk.detail', compact('produk', 'fotoTambahanCount','max_foto_tambahan'));
     }
 
     public function destroy($id_produk)
@@ -107,6 +110,9 @@ public function update(Request $request, $id_produk)
         if ($produk->foto_utama && Storage::exists('public/' . $produk->foto_utama)) {
                     Storage::delete('public/' . $produk->foto_utama);
                 }
+        if ($produk->tambahan->count() > 0) {
+            return redirect()->back()->with('error', 'Produk tidak bisa dihapus karena memiliki keterangan tambahan. Harap hapus keterangan tambahan terlebih dahulu.');
+        }
        $produk->delete(); 
         return back()->with(['success' => 'Produk berhasil dihapus.']);
     }

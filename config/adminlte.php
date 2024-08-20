@@ -307,123 +307,11 @@ return [
         ],
         ['header' => 'KATEGORI'],
         [
-            'text' => 'Data KATEGORI',
+            'text' => 'Data Kategori',
             'url'  => '/admin-kategori',
             'icon'  => 'fas fa-user-graduate',
         ],
-        // [
-        //     'text' => 'Data Wali Murid',
-        //     'url'  => '/ortus',
-        //     'icon'  => 'fas fa-home',
-        // ],
-        // [
-        //     'text' => 'Kelola Akses',
-        //     'url'  => '/roles',
-        //     'icon'  => ' fa fa-crown',
-        // ],
-        // ['header' => 'AKADEMIK'],
-        // [
-        //     'text' => 'Kelola Tahun Ajaran',
-        //     'url'  => '/tahun-ajaran',
-        //     'icon'  => 'fa solid fa-book-open',
-       
-        // ],
-        // [
-        //     'text' => 'Data Kelas',
-        //     'url'  => '/kelas',
-        //     'icon'  => 'fa fa-school',
-       
-        // ],
-           
-        // [
-        //     'text' => 'Kelola Mata Pelajaran',
-        //     'url'  => '/mapels',
-        //     'icon'  => ' fa fa-book',
-        // ],
-        // [
-        //     'text' => 'Jadwal',
-        //     'icon' => 'fa fa-calendar',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Jam Pelajaran',
-        //             'url' => '/jam-pelajarans',
-        //             'icon' => 'fa fa-clock',
-        //         ],
-        //         [
-        //             'text' => 'Jadwal Pelajaran',
-        //             'url' => '/jadwalPelajarans',
-        //             'icon' => 'fa fa-calendar-alt',
-        //         ],
-        //     ],
-        // ],
-        
-        // [
-        //     'text' => 'Data Nilai',
-        //     'icon'  => 'fa fa-chart-line',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Nilai Semua Murid',
-        //             'url'  => '/nilais',
-        //             'icon' => 'fa fa-user-graduate',
-        //         ],
-        //         [
-        //             'text' => 'Rincian Nilai',
-        //             'url'  => '/rincians',
-        //             'icon' => 'fa fa-list',
-        //         ],
-        //     ],
-        // ],
-        // [
-        //     'text' => 'Data Kehadiran',
-        //     'icon'  => 'fas fa-check-circle',
-        //     'submenu' => [
-        //         // [
-        //         //     'text' => 'Kehadiran Murid',
-        //         //     'url'  => '/kehadirans',
-        //         //     'icon' => 'fas fa-user-check',
-        //         // ],
-        //         [
-        //             'text' => 'Rincian Kehadiran',
-        //             'url'  => '/rincian-kehadiran',
-        //             'icon' => 'far fa-calendar-alt',
-        //         ],
-        //         [
-        //             'text' => 'Rincian Sesi',
-        //             'url'  => '/sesi',
-        //             'icon' => 'fas fa-user-check',
-        //         ],
-        //     ],
-        // ], 
-        // [
-        //     'text' => 'Pelanggaran dan Prestasi',
-        //     // 'icon'  => 'fas fa-times',
-        //     'icon'  => '',
-        //     'submenu' => [
-        //         [
-        //             'text' => 'Daftar Pelanggaran',
-        //             'url'  => '/daftar-pelanggaran',
-        //             'icon' => 'far fa-list-alt',
-        //         ],
-        //         [
-        //             'text' => 'Daftar Siswa Melanggar',
-        //             'url'  => '/pelanggaransiswa',
-        //             'icon' => 'fas fa-exclamation-triangle',
-        //         ],
-        //         [
-        //             'text' => 'Daftar Prestasi',
-        //             'url'  => '/daftar-prestasi',
-        //             'icon' => 'fas fa-trophy',
-                
-        //         ],
-        //         [
-        //             'text' => 'Daftar Siswa Berprestasi',
-        //             'url'  => '/prestasi-siswa',
-        //             'icon' => 'fas fa-award',
-        //         ],
-        //     ],
-        // ], 
-
-     
+    
 
 
         // [
@@ -468,14 +356,15 @@ return [
         // ['header' => ''],
         ['header' => 'PENGATURAN AKUN'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            // 'text' => 'profile',
+            // 'icon' => 'fas fa-regular fa-address-book',
+            // 'submenu' => [
+                // [
+                    'text' => 'Pengaturan Akun',
+                    'url'  => '/pengaturan-akun',
+                    'icon' => 'fas fa-user-cog',
+                // ],
+            // ],
         ],
         // [
         //     'text'    => 'multilevel',

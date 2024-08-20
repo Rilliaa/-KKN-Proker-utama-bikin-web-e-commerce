@@ -12,9 +12,12 @@ class Tambahan extends Model
     protected $primaryKey = 'id_tambahan';
     protected $fillable = [
     'id_produk', 
+    'id_kategori', 
     'foto_tambahan', 
     'deskripsi_tambahan', 
-    
-
 ];
+public function kategori()
+{
+    return $this->belongsTo(Kategori::class, 'id_kategori');
+}
 }

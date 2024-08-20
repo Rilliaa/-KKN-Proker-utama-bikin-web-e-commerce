@@ -4,6 +4,19 @@
     <h1 class="m-0 text-dark">Halaman Kategori</h1>
 @stop
 @section('content')
+@if(session('error'))
+    <div class="alert alert-danger text-center fixed-alert">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="alert alert-success text-center fixed-alert">
+        {{ session('success') }}
+    </div>
+@endif
+
+{{-- Halaman ini di atur oleh method Kategori / index --}}
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -53,6 +66,7 @@
             </div>
         </div>
     </div>
+    {{$kategori->links()}}
 </div>
 
 <!-- Modal Tambah Kategori -->
@@ -134,7 +148,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-    // Add category
+   
+   
+    // Untuk mengirim data dari modal ke database --start
     $('#addCategoryForm').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
@@ -150,26 +166,28 @@ $(document).ready(function() {
             }
         });
     });
+    // Untuk mengirim data dari modal ke database --End
 
-    // Edit category modal
+
+    // Untuk mengisi form pada modal edit --Start
     $('body').on('click','#btnEdit' ,function() {
         let id = $(this).data('id');
         let nama_kategori = $(this).data('nama');
         let kode_kategori = $(this).data('kode');
         let deskripsi_kategori = $(this).data('deskripsi');
-
-        // console.log("kode Kategori: ", kode_kategori);
+    
         document.getElementById('edit_id').value = id;
         document.getElementById('edit_nama_kategori').value = nama_kategori;
         document.getElementById('edit_kode_kategori').value = kode_kategori;
         document.getElementById('edit_deskripsi_kategori').value = deskripsi_kategori;
         
     });
-
-    // Edit category
+    // Untuk mengisi form pada modal edit --End
+    
+    // Untuk update data --Start
     $('#editCategoryForm').on('submit', function(e) {
-    e.preventDefault();
-    var id = $('#edit_id').val();
+        e.preventDefault();
+        var id = $('#edit_id').val();
     $.ajax({
         type: 'PUT',
         url: '{{ route("admin.kategori-update", ":id") }}'.replace(':id', id),
@@ -183,7 +201,21 @@ $(document).ready(function() {
         }
     });
 });
+// Untuk update data --End
 
 });
+
+
+   // Menghilangkan notifikasi setelah 2 detik --Start
+   setTimeout(function() {
+        const alert = document.querySelector('.fixed-alert');
+        if (alert) {
+            alert.style.opacity = '0';
+            setTimeout(function() {
+                alert.remove();
+            }, 500); // Sesuaikan dengan durasi transition di CSS
+        }
+    }, 5000); // Durasi 2 detik
+    // Menghilangkan notifikasi setelah 2 detik --End
 </script>
 @stop

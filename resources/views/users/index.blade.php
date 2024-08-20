@@ -9,15 +9,15 @@
             <div class="card">
                 <div class="card-body">
                     <a href="{{route('users.create')}}" class="btn btn-primary mb-2">
-                        Tambah
+                        <i class="fas fa-plus"></i> Tambah
                     </a>
                     <table class="table table-hover table-bordered table-stripped" id="example2">
                         <thead>
-                        <tr>
+                        <tr style="text-align: center">
                             <th>No.</th>
                             <th>Nama</th>
                             <th>Email</th>
-                            <th>Opsi</th>
+                            <th>Aksi</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -25,11 +25,12 @@
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
-                                <td>
-                                    <a href="{{route('users.edit', $user->id)}}" class="btn btn-primary btn-xs">
-                                        Edit
+                                <td >{{$user->email}}</td>
+                                <td  style="text-align: center">
+                                    {{-- <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">
+                                        <i class="fas fa-edit"></i> Edit
                                     </a>
+                                     --}}
                                     <form action="{{ route('user.destroy', $user->id)}}" method="POST" style="display:inline;" >
                                         @csrf
                                         @method('DELETE')
