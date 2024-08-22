@@ -13,6 +13,12 @@ class KategoriController extends Controller
         $kategori = Kategori::orderby('nama_kategori')->paginate(10);
         return view('kategori.index', compact('kategori'));
     }
+    public function searchCategories(Request $request)
+    {
+        $query = $request->query('search');
+        $kategori = Kategori::where('nama_kategori', 'LIKE', '%' . $query . '%')->get();
+        return response()->json($kategori);
+    }
     public function store(Request $request)
     {
         // Untuk store data dari modal  kategori/index.blade.php ke db

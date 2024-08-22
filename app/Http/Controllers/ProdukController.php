@@ -116,6 +116,29 @@ public function update(Request $request, $id_produk)
        $produk->delete(); 
         return back()->with(['success' => 'Produk berhasil dihapus.']);
     }
+    
+    public function getAllProducts()
+    {
+        $produk = Produk::all();
+        return response()->json($produk);
+    }
+
+    public function getProductDetails($id)
+    {
+        $produk = Produk::find($id);
+        if ($produk) {
+            return response()->json($produk);
+        } else {
+            return response()->json(['message' => 'Tidak menemukan Produk'], 404);
+        }
+    }
+
+    public function searchProducts(Request $request)
+    {
+        $query = $request->query('search');
+        $produk = Produk::where('nama_produk', 'LIKE', '%' . $query . '%')->get();
+        return response()->json($produk);
+    }
 
     
 }

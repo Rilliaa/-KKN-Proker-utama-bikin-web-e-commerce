@@ -10,11 +10,11 @@ use App\Http\Controllers\PengaturanAkunController;
 
 
 // Default route
-Route::get('/', function () {
-    return view('produk');
-});
+// Route::get('/', function () {
+//     return view('produk');
+// });
 
-Route::get('/login', function () {
+Route::get('/', function () {
     return view('auth.login');
 })->name('login');
 
@@ -24,6 +24,14 @@ Auth::routes();
 // Home route for authenticated users
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
+// -----------------------------Rute untuk API-----------------------------//
+Route::get('/api/products', [ProdukController::class, 'getAllProducts'])->name('api.getproduk');
+Route::get('/api/products/{id}', [ProdukController::class, 'getProductDetails'])->name('api.getdetail');
+Route::get('/api/products/search', [ProdukController::class, 'searchProducts'])->name('api.searchproduk');
+Route::get('/api/categories/search', [KategoriController::class, 'searchCategories'])->name('api.searchkategori');
+// -----------------------------Rute untuk API-----------------------------//
+
+
 // -----------------------------Rute untuk Produk-----------------------------//
 Route::get('/admin-produk',[ProdukController::class,'index'])->name('admin.produk-index');
 Route::post('/admin-produk-store', [ProdukController::class, 'store'])->name('admin.produk-store');
@@ -31,8 +39,6 @@ Route::put('/admin-produk-update/{id}', [ProdukController::class, 'update'])->na
 Route::delete('/admin-produk-delete/{id}', [ProdukController::class, 'destroy'])->name('admin.produk-destroy');
 Route::get('/admin-produk-detail/{id}',[ProdukController::class,'show'])->name('admin.produk-show');
 // -----------------------------Rute untuk Produk-----------------------------//
-
-
 
 
 // -----------------------------Rute untuk Kategori-----------------------------//
@@ -75,7 +81,6 @@ Route::resource('kategori', \App\Http\Controllers\KategoriController::class)->mi
 Route::resource('tambahan', \App\Http\Controllers\TambahanController::class)->middleware('auth');
 Route::resource('pengaturan-akun', \App\Http\Controllers\PengaturanAkunController::class)->middleware('auth');
 // -----------------------------Untuk Resource-----------------------------//
-
 
 
 
