@@ -11,7 +11,6 @@
                     <a href="{{route('users.create')}}" class="btn btn-primary mb-2">
                         <i class="fas fa-plus"></i> Tambah
                     </a>
-                    <!-- Make the table responsive -->
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered table-striped">
                             <thead>
