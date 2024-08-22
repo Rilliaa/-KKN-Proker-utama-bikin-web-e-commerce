@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'KembangSetaman.store',
+    'title' => 'KembangSetaman',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>KembangSetaman</b>.store',
+    'logo' => '<b>KembangSetaman</b>',
     // 'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img' => 'vendor/adminlte/dist/gambar/Logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',

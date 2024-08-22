@@ -26,11 +26,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <button class="btn btn-primary mt-3 mb-3" data-toggle="modal" data-target="#addProductModal">
-                <i class="fas fa-plus"></i> Tambah Produk
-                </button>
+                    <button class="btn btn-primary mt-3 mb-3" data-toggle="modal" data-target="#addProductModal">
+                         <i class="fas fa-plus"></i> Tambah Produk
+                    </button>
                 <div class="table-responsive">        
-                <table class="table table-bordered table-hover mt-3">
+                    <table class="table table-bordered table-hover mt-3">
                     <thead>
                         <tr style="text-align: center">
                             <th>No</th>
@@ -84,8 +84,9 @@
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
+                     </table>
                  </div>
+                </div> 
             </div>
         </div>
     </div>

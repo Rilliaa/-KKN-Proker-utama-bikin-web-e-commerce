@@ -11,55 +11,41 @@
                     <a href="{{route('users.create')}}" class="btn btn-primary mb-2">
                         <i class="fas fa-plus"></i> Tambah
                     </a>
-                    <table class="table table-hover table-bordered table-stripped" id="example2">
-                        <thead>
-                        <tr style="text-align: center">
-                            <th>No.</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Aksi</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($users as $key => $user)
-                            <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$user->name}}</td>
-                                <td >{{$user->email}}</td>
-                                <td  style="text-align: center">
-                                    {{-- <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                     --}}
-                                    <form action="{{ route('user.destroy', $user->id)}}" method="POST" style="display:inline;" >
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger"  type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus produk ini?')" >
-                                            <i class="fas fa-trash"></i>
-                                            Delete
-                                        </button>
-                                        {{-- <a href="{{route('users.destroy', $user->id)}}" onclick="notificationBeforeDelete(event, this)" class="btn btn-danger btn-xs"> --}}
-                                        {{-- </a> --}}
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                    <!-- Make the table responsive -->
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>No.</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($users as $key => $user)
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td class="text-center">
+                                            <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="btn-group" role="group">
+                                                    <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div> 
                 </div>
             </div>
         </div>
     </div>
 @stop
-
-
-
-
-
-
-
-
-
-
-
-

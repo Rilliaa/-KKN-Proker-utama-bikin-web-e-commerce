@@ -4,6 +4,7 @@
     <h1 class="m-0 text-dark">Halaman Kategori</h1>
 @stop
 @section('content')
+
 @if(session('error'))
     <div class="alert alert-danger text-center fixed-alert">
         {{ session('error') }}
@@ -21,48 +22,53 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#addCategoryModal"><i class="fas fa-plus mr-1"></i> Tambah Kategori</button>
-                <table class="table table-bordered table-hover mt-3">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Kategori</th>
-                            <th>Kode</th>
-                            <th>Deskripsi</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($kategori as $data)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $data->nama_kategori }}</td>
-                                <td>{{ $data->kode_kategori }}</td>
-                                <td>{{ $data->deskripsi_kategori }}</td>
-                                <td>
-                                    <button class="btn btn-success btn-edit"  
-                                    data-id="{{ $data->id_kategori }}" 
-                                    data-nama="{{ $data->nama_kategori }}" 
-                                    data-kode="{{ $data->kode_kategori }}" 
-                                    data-deskripsi="{{ $data->deskripsi_kategori }}"
-                                    data-toggle="modal"
-                                    id="btnEdit"
-                                    data-target="#editCategoryModal">
-                                    <i class="fas fa-edit"></i>    
-                                        Edit
-                                    </button>
-                                    <form action="{{ route('admin.kategori-destroy', $data->id_kategori) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                            <i class="fas fa-trash"></i>
-                                            Delete</button>
-                                    </form>
-                                </td>
+                <button class="btn btn-primary mb-2" data-toggle="modal" data-target="#addCategoryModal">
+                    <i class="fas fa-plus mr-1"></i> Tambah Kategori
+                </button>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover mt-3">
+                        <thead>
+                            <tr class="text-center">
+                                <th>No</th>
+                                <th>Nama Kategori</th>
+                                <th>Kode</th>
+                                <th>Deskripsi</th>
+                                <th>Aksi</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($kategori as $data)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $data->nama_kategori }}</td>
+                                    <td>{{ $data->kode_kategori }}</td>
+                                    <td>{{ $data->deskripsi_kategori }}</td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-success btn-edit"  
+                                                data-id="{{ $data->id_kategori }}" 
+                                                data-nama="{{ $data->nama_kategori }}" 
+                                                data-kode="{{ $data->kode_kategori }}" 
+                                                data-deskripsi="{{ $data->deskripsi_kategori }}"
+                                                data-toggle="modal"
+                                                id="btnEdit"
+                                                data-target="#editCategoryModal">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                            <form action="{{ route('admin.kategori-destroy', $data->id_kategori) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div> 
             </div>
         </div>
     </div>

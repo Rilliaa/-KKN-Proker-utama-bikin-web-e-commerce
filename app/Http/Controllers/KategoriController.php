@@ -13,6 +13,12 @@ class KategoriController extends Controller
         $kategori = Kategori::orderby('nama_kategori')->paginate(10);
         return view('kategori.index', compact('kategori'));
     }
+
+    public function getAllCategories()
+    {
+        $kategori = Kategori::all();
+        return response()->json($kategori);
+    }
     public function searchCategories(Request $request)
     {
         $query = $request->query('search');

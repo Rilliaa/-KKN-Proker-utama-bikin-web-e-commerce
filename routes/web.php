@@ -29,6 +29,7 @@ Route::get('/api/products', [ProdukController::class, 'getAllProducts'])->name('
 Route::get('/api/products/{id}', [ProdukController::class, 'getProductDetails'])->name('api.getdetail');
 Route::get('/api/products/search', [ProdukController::class, 'searchProducts'])->name('api.searchproduk');
 Route::get('/api/categories/search', [KategoriController::class, 'searchCategories'])->name('api.searchkategori');
+Route::get('/api/categories', [KategoriController::class, 'getAllCategories'])->name('api.getkategori');
 // -----------------------------Rute untuk API-----------------------------//
 
 
