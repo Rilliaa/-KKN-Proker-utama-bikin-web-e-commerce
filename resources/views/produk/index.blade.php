@@ -92,6 +92,7 @@
     </div>
     {{$produk->links()}}
 </div>
+<</div>
 
 {{-- Modal tambah --}}
 <div class="modal fade" id="addProductModal" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">

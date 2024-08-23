@@ -152,15 +152,16 @@ public function update(Request $request, $id_produk)
                     return [
                         'id_produk' => $item->id_produk,
                         'nama_produk' => $item->nama_produk,
-                        'nama_kategori' => $item->kategori->nama_kategori,  // menampilkan nama kategori
-                        'deskripsi_tambahan' => $item->tambahan->first()?->deskripsi_tambahan,  // menampilkan deskripsi tambahan jika ada
-                        'kategori_tambahan' => $item->tambahan->first()?->kategori->nama_kategori ?? null,  // menampilkan nama kategori tambahan jika ada
-                        'foto_tambahan' => $item->tambahan->first()?->foto_tambahan ?? null,  // menampilkan foto tambahan jika ada
+                        'nama_kategori' => $item->kategori->nama_kategori,
+                        'deskripsi_tambahan' => $item->tambahan->first()?->deskripsi_tambahan,
+                        'kategori_tambahan' => $item->tambahan->first()?->kategori->nama_kategori ?? null,
+                        'foto_tambahan' => $item->tambahan->pluck('foto_tambahan')->take(4)->all() 
                     ];
                 });
     
         return response()->json($produk);
     }
+    
     
     // $query = $request->query('search');
     // $produk = Produk::where('nama_produk', 'LIKE', '%' . $query . '%')->get();
