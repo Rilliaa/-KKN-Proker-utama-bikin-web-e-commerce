@@ -125,9 +125,16 @@ public function update(Request $request, $id_produk)
 
     public function getProductDetails($id)
     {
-        $produk = Produk::find($id);
+        $produk = Produk::with('kategori')->find($id);
+
         if ($produk) {
-            return response()->json($produk);
+            return response()->json([
+                'id_produk' => $produk->id_produk,
+                'nama_produk' => $produk->nama_produk,
+                'deskripsi_produk' => $produk->deskripsi,
+                'link_produk' => $produk->link_produk,
+                'id_kategori' => $produk->id_kategori,
+            ]);
         } else {
             return response()->json(['message' => 'Tidak menemukan Produk'], 404);
         }
@@ -135,10 +142,29 @@ public function update(Request $request, $id_produk)
 
     public function searchProducts(Request $request)
     {
-        $query = $request->query('search');
-        $produk = Produk::where('nama_produk', 'LIKE', '%' . $query . '%')->get();
+        $query = $request->input('q');
+    
+        $produk = Produk::with(['kategori', 'tambahan'])
+                ->where('nama_produk', 'LIKE', "%$query%")
+                ->orderBy('nama_produk')
+                ->get()
+                ->map(function($item) {
+                    return [
+                        'id_produk' => $item->id_produk,
+                        'nama_produk' => $item->nama_produk,
+                        'nama_kategori' => $item->kategori->nama_kategori,  // menampilkan nama kategori
+                        'deskripsi_tambahan' => $item->tambahan->first()?->deskripsi_tambahan,  // menampilkan deskripsi tambahan jika ada
+                        'kategori_tambahan' => $item->tambahan->first()?->kategori->nama_kategori ?? null,  // menampilkan nama kategori tambahan jika ada
+                        'foto_tambahan' => $item->tambahan->first()?->foto_tambahan ?? null,  // menampilkan foto tambahan jika ada
+                    ];
+                });
+    
         return response()->json($produk);
     }
+    
+    // $query = $request->query('search');
+    // $produk = Produk::where('nama_produk', 'LIKE', '%' . $query . '%')->get();
+    // return response()->json($produk);
 
     
 }

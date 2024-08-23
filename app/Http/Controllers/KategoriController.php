@@ -20,11 +20,37 @@ class KategoriController extends Controller
         return response()->json($kategori);
     }
     public function searchCategories(Request $request)
-    {
-        $query = $request->query('search');
-        $kategori = Kategori::where('nama_kategori', 'LIKE', '%' . $query . '%')->get();
-        return response()->json($kategori);
-    }
+{
+    $query = $request->query('search');
+
+    $kategori = Kategori::where('nama_kategori', 'LIKE', '%' . $query . '%')
+        ->with(['produk.tambahan'])  // Load produk dan data tambahan terkait
+        ->get()
+        ->map(function($item) {
+            return [
+                'id_kategori' => $item->id_kategori,
+                'nama_kategori' => $item->nama_kategori,
+                'produks' => $item->produk->map(function($produk) {
+                    return [
+                        'id_produk' => $produk->id_produk,
+                        'nama_produk' => $produk->nama_produk,
+                        'deskripsi_tambahan' => $produk->tambahan->map(function($tambahan) {
+                            return $tambahan->deskripsi_tambahan;
+                        }),
+                        'kategori_tambahan' => $produk->tambahan->map(function($tambahan) {
+                            return $tambahan->kategori->nama_kategori ?? null;
+                        }),
+                        'foto_tambahan' => $produk->tambahan->map(function($tambahan) {
+                            return $tambahan->foto_tambahan ?? null;
+                        }),
+                    ];
+                })
+            ];
+        });
+
+    return response()->json($kategori);
+}
+
     public function store(Request $request)
     {
         // Untuk store data dari modal  kategori/index.blade.php ke db
@@ -75,15 +101,4 @@ class KategoriController extends Controller
         $data = Kategori::where('nama_kategori','LIKE','%'.request('q').'%')->orderBy("nama_kategori","asc")->get();
         return response()->json($data);
     }
-
-    // public function dropdown(Request $request)
-    // {
-        // kmrn untuk dropdown id_kategori based on nama kategori, tapi sekarang udah ga dipake
-    //     $kategori = $request->kategori;
-    //     $id_kategori = Kategori::where('nama_kategori',$kategori)->get('id_kategori');
-    //     dd($id_kategori);
-    //     return response()->json($id_kategori);
-
-    // }
-    
 }

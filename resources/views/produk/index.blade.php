@@ -42,7 +42,7 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="product-table-body">
                         @foreach ($produk as $p)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
@@ -386,6 +386,13 @@ $(document).ready(function() {
         }
     }, 5000); // Durasi 5 detik
     // Menghilangkan notifikasi setelah 5 detik --End
+
+
+
+
+    // Live Search
+    
+    // Live Search
 </script>
 
 @stop
