@@ -39,7 +39,7 @@
                         <tbody>
                             @foreach ($kategori as $data)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td style="text-align: center">{{ $loop->iteration }}</td>
                                     <td>{{ $data->nama_kategori }}</td>
                                     <td>{{ $data->kode_kategori }}</td>
                                     <td>{{ $data->deskripsi_kategori }}</td>

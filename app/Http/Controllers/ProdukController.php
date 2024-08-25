@@ -32,8 +32,10 @@ class ProdukController extends Controller
         // untuk size  inputan foto bisa di sesuaikan, itu rio pake 5mb 
     ]);
 
-    $path = $request->file('foto')->store('foto_produk', 'public');
+    $path = $request->file('foto')->store('foto_produk/','public');
     $url = Storage::url($path);
+
+    echo $url;
     // foto nya di simpan di folder_proyek/public/storage/foto_produk/ file-foto 
 
     $produk = new Produk();
@@ -104,18 +106,24 @@ public function update(Request $request, $id_produk)
 
     public function destroy($id_produk)
     {
-        // Ini belum rio perbarui method nya, jadi foto yang udah ada pada database sudah terhapus tapi file foto nya masih ada di directory foto_produk
-        // Mungkin nanti bisa di perbarui method delete nya, jadi saat hapus data, foto yang di directory juga terhapus. Ntar di copas aja  yang ada di method update di atas
-        $produk = Produk::findorfail($id_produk);
-        if ($produk->foto_utama && Storage::exists('public/' . $produk->foto_utama)) {
-                    Storage::delete('public/' . $produk->foto_utama);
-                }
+        $produk = Produk::findOrFail($id_produk);
+        // dd($produk);
+
+        if ($produk->foto_utama && Storage::disk('public')->exists($produk->foto_utama)) {
+            Storage::disk('public')->delete($produk->foto_utama);
+        }
+        
         if ($produk->tambahan->count() > 0) {
             return redirect()->back()->with('error', 'Produk tidak bisa dihapus karena memiliki keterangan tambahan. Harap hapus keterangan tambahan terlebih dahulu.');
         }
-       $produk->delete(); 
+        $produk->delete();
         return back()->with(['success' => 'Produk berhasil dihapus.']);
     }
+    
+    
+    
+    
+
     
     public function getAllProducts()
     {

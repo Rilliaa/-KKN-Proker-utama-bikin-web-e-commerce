@@ -40,7 +40,7 @@ class TambahanController extends Controller
     
         // Save image file if present
         if ($request->hasFile('foto_tambahan')) {
-            $filePath = $request->file('foto_tambahan')->store('produk_tambahan', 'public');
+            $filePath = $request->file('foto_tambahan')->store('storage/produk_tambahan', 'public');
         }
     
         // Save data to database
@@ -163,51 +163,44 @@ class TambahanController extends Controller
         public function delete($id_produk)
     {
         // untuk menghapus seluruh data pada tambahan/index.blade.php
-        // Mengambil semua data tambahan untuk produk ini
         $tambahan = Tambahan::where('id_produk', $id_produk)->get();
-
-        // Menghapus semua foto tambahan dan deskripsi dari database
         foreach ($tambahan as $item) {
-            if ($item->foto_tambahan && Storage::exists('public/' . $item->foto_tambahan)) {
-                Storage::delete('public/' . $item->foto_tambahan);
+            if (!empty($item->foto_tambahan)) {
+                if (Storage::disk('public')->exists($item->foto_tambahan)) {
+                    Storage::disk('public')->delete($item->foto_tambahan);
+                }
             }
             $item->delete();
         }
+        
 
         // Redirect ke halaman produk show setelah semua data dihapus
         return redirect()->route('admin.produk-show', $id_produk)->with('success', 'Semua data tambahan berhasil dihapus.');
     }
 
 
-    // public function destroy($id_tambahan)
-    // {
-
-    //     // untuk menghapus gambar saja pada tambahan.index
-    //     $tambahan = Tambahan::findOrFail($id_tambahan);
-    //     // dd("Data",$tambahan);
-        
-    //     // Hapus foto tambahan dari penyimpanan jika ada
-    //     if ($tambahan->foto_tambahan && Storage::exists('public/' . $tambahan->foto_tambahan)) {
-    //         Storage::delete('public/' . $tambahan->foto_tambahan);
-    //         $tambahan->foto_tambahan = null; // Set foto_tambahan ke null
-    //         $tambahan->save(); // Simpan perubahan (hanya menghapus gambar)
-    //     }
-    
-    //     return redirect()->back()->with('success', 'Foto tambahan berhasil dihapus.');
-    // }
+ 
 
     public function destroy($id_produk)
     {
         $tambahan = Tambahan::findOrFail($id_produk);
-        // Hapus foto tambahan dari penyimpanan
-        if ($tambahan->foto_tambahan && Storage::exists('public/' . $tambahan->foto_tambahan)) {
-            Storage::delete('public/' . $tambahan->foto_tambahan);
+    
+        // Pastikan foto_tambahan tidak null dan tidak kosong
+        if (!empty($tambahan->foto_tambahan)) {
+            // Hapus foto tambahan dari penyimpanan
+            if (Storage::disk('public')->exists($tambahan->foto_tambahan)) {
+                Storage::disk('public')->delete($tambahan->foto_tambahan);
+            }
         }
+    
         $tambahan->foto_tambahan = null; 
         $tambahan->save(); 
-
+        // $tambahan->delete(); 
+    
         return redirect()->back()->with('success', 'Data tambahan berhasil dihapus.');
     }
+    
+
     
 
 
